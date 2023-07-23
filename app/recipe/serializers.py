@@ -38,7 +38,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title', 'time_minutes', 'price', 'link', 'tags',
             'ingredients',
-            ]
+        ]
         read_only_fields = ['id']
 
     def _get_or_create_tags(self, tags, recipe):
@@ -51,7 +51,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
             recipe.tags.add(tag_obj)
 
-
     def _get_or_create_ingredients(self, ingredients, recipe):
         """Handle getting or creating ingredients as needed."""
         auth_user = self.context['request'].user
@@ -61,7 +60,6 @@ class RecipeSerializer(serializers.ModelSerializer):
                 **ingredient,
             )
             recipe.ingredients.add(ingredient_obj)
-
 
     def create(self, validated_data):
         """Create a recipe."""
@@ -90,11 +88,13 @@ class RecipeSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for recipe detail view."""
 
     class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['description', 'image']
+        fields = RecipeSerializer.Meta.fields + ['description']
+
 
 class RecipeImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading images to recipes."""
