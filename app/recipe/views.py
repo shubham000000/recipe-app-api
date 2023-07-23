@@ -70,7 +70,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         ).order_by('-id').distinct()
 
     def get_serializer_class(self):
-        """Return the serializeer class for request."""
+        """Return the serializer class for request."""
         if self.action == 'list':
             return serializers.RecipeSerializer
         elif self.action == 'upload_image':
@@ -106,12 +106,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         ]
     )
 )
-
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
-                 mixins.UpdateModelMixin,
-                 mixins.ListModelMixin,
-                 viewsets.GenericViewSet):
-    """Base viewset for recipe attributes"""
+                            mixins.UpdateModelMixin,
+                            mixins.ListModelMixin,
+                            viewsets.GenericViewSet):
+    """Base viewset for recipe attributes."""
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -128,10 +127,12 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
             user=self.request.user
         ).order_by('-name').distinct()
 
+
 class TagViewSet(BaseRecipeAttrViewSet):
     """Manage tags in the database."""
     serializer_class = serializers.TagSerializer
     queryset = Tag.objects.all()
+
 
 class IngredientViewSet(BaseRecipeAttrViewSet):
     """Manage ingredients in the database."""
